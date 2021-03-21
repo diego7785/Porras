@@ -1,4 +1,4 @@
 # Porras
 
-Repositorio para código de talleres de la monitoría Porras
+Aquí podrás encontrar el código del back de la aplicación desplegada en Heroku
 
