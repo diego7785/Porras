@@ -30,10 +30,14 @@ class Login extends Component{
             .then(res => res.json())
             .then(data => {
                 if(data.bool){
-                    console.log("Usuario registrado");
-                    console.log(data.data)
+                    alert("Usuario registrado");
+                    console.log(data.data);
+                    console.log(data.token);
+                    localStorage.setItem('token', JSON.stringify({token: data.token}));
+                    localStorage.setItem('data', JSON.stringify(data.data));
+                    window.location.reload();
                 } else {
-                    console.log(data.error);
+                    alert(data.error);
                 }
             })
             .catch(e => console.log(e.message))

@@ -1,13 +1,14 @@
 const express = require('express');
 const cors = require('cors');
+var jwt = require('jsonwebtoken');
 const {Sequelize} = require('Sequelize');
 
 // Constants
 const PORT = process.env.PORT || 5000;
-const USER = "jlhoacphljjpui";
-const PASSWORD = "fcddbaa49baaec267311775239e1dd5045b1298f5f642efad886d6ce2a925c66";
-const HOST = "ec2-3-91-127-228.compute-1.amazonaws.com";
-const DATABASE = "d5mb7o1cos7u2q"
+const USER = "ykyujzyxlhjojz";
+const PASSWORD = "ad680e6dd565e0186b6c618f0fee006d38b4e649768e8f1fbc3a573f379d13b1";
+const HOST = "ec2-52-71-161-140.compute-1.amazonaws.com";
+const DATABASE = "d7gg4a8p93jkhk"
 
 
 
@@ -39,10 +40,16 @@ sequelize.authenticate().then((data) => {
 });
 
 app.post('/login', (req, res) => {
-    sequelize.query(`SELECT * FROM Person WHERE id = '${req.body.id}' AND password='${req.body.password}'`)
+    sequelize.query(`SELECT name, email FROM Person WHERE id = '${req.body.id}' AND password='${req.body.password}'`)
     .then(data => {
         if(data[0].length != 0){
-            res.json({bool: true, data: data[0]})
+            sequelize.query(`SELECT * FROM Token WHERE id_person = '${req.body.id}'`)
+            .then(data2 => {
+                res.json({bool: true, data: data[0], token: data2[0]})
+            })
+            .catch(e => {
+                res.json({bool: false, error: "There's an error with this user"})
+            })
         } else {
             res.json({bool: false, error: "User not found"})
         }
@@ -53,12 +60,25 @@ app.post('/login', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
+    var token = jwt.sign({ user: req.body.id }, req.body.password);
     sequelize.query(`INSERT INTO Person VALUES('${req.body.id}', '${req.body.name}', '${req.body.email}', '${req.body.password}')`)
-    .then(data => {
-        res.json({bool: true, data:"User registered"});
+    .then(_ => {
+        sequelize.query(`INSERT INTO Token VALUES('${token}', '${req.body.id}')`)
+        .then(_ => {
+            res.json({bool: true, data:"User registered"});
+        })
+        .catch(e => {
+            sequelize.query(`DELETE FROM Person WHERE id = '${req.body.id}'`)
+            .then(_ => {
+                res.json({bool: false, error:`Can not register user - ${e.message}`});
+            })
+            .catch(e => {
+                res.json({bool: false, error:`Unexpected error - ${e.message}`});
+            })
+        })
     })
     .catch(e => {
-        res.json({bool: false, error: "Can not register user"});
+        res.json({bool: false, error: `Can not register user - ${e.message}`});
     })
 })
 

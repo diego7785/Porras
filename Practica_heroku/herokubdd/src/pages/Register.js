@@ -32,9 +32,9 @@ class Register extends Component {
         }).then(res => res.json())
         .then(data => {
             if(data.bool){
-                console.log(data.data);
+                alert(data.data);
             } else {
-                console.log(data.error);
+                alert(data.error);
             }
         })
        
@@ -52,7 +52,7 @@ class Register extends Component {
                 <input type="text" id="name" placeholder="Name" value={this.state.name} onChange={(e) => this.handleChange(e)}/>
                 <input type="email" id="email" placeholder="Email" value={this.state.email} onChange={(e) => this.handleChange(e)}/>
                 <input type="password" id="password" placeholder="Password" value={this.state.password} onChange={(e) => this.handleChange(e)}/>
-                <input type="submit" value="Login" onClick={(e) => this.handleSubmit(e)}/>
+                <input type="submit" value="Register" onClick={(e) => this.handleSubmit(e)}/>
             </form>
             <Link to="/">Login</Link>
             </>
