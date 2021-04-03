@@ -4,10 +4,10 @@ const {Sequelize} = require('Sequelize');
 
 // Constants
 const PORT = process.env.PORT || 5000;
-const USER = "jlhoacphljjpui";
-const PASSWORD = "fcddbaa49baaec267311775239e1dd5045b1298f5f642efad886d6ce2a925c66";
-const HOST = "ec2-3-91-127-228.compute-1.amazonaws.com";
-const DATABASE = "d5mb7o1cos7u2q"
+const USER = "";
+const PASSWORD = "";
+const HOST = "";
+const DATABASE = ""
 
 
 
