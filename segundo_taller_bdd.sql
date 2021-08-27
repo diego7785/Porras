@@ -1,3 +1,5 @@
+-- PRIMER PUNTO
+
 CREATE TABLE Departamentos(cod_dpto SERIAL PRIMARY KEY,
 						  nombre_dpto TEXT);
 
@@ -26,7 +28,7 @@ INSERT INTO Municipios(nom_municipio, cod_dpto_fk) VALUES('Cali', 2),
 														 ('Cabrera', 3);
 
 
---###################################
+-- SEGUNDO PUNTO
 
 
 CREATE TABLE Pecuarios(id_peq SERIAL PRIMARY KEY,
@@ -62,7 +64,7 @@ INSERT INTO Novedad(fecha_novedad, id_peq_fk) VALUES('2021-03-25', 1),
 
 
 
---###################################
+-- CROSSTAB
 
 
 CREATE TABLE Ganado(id_ganado SERIAL PRIMARY KEY,
